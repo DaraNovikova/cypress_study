@@ -1,3 +1,7 @@
+Cypress.Commands.add("login", (username, password, rememberMe = false) => {
+    return cy.get(`[data-test=${selector}]`)
+  })
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite

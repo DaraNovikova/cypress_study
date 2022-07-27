@@ -1,9 +1,16 @@
 export const sign_in_page = {
     logo_image: '.makeStyles-logo-3',
     title_text: '.MuiTypography-h5',
-    get_selector_for_date(date){
-      return `date today ${date}`
-    },
     username_field:'#username',
     password_field:'#password',
+    username_placeholder:'#username-label',
+    password_placeholder:'#password-label',
+    username_required_error: '#username-helper-text',
+    remember_me_checkbox: '[name="remember"]',
+    sign_in_btn: '[type="submit"]',
+    sign_up_link: '[data-test="signup"]',
+    cypress_copyright_block: 'p a',
+    first_name_field: '#firstName',
+    last_name_field: '#lastName',
+    confirm_password_field: '#confirmPassword',
   }
