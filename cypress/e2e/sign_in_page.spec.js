@@ -1,4 +1,32 @@
 const {sign_in_page} = require("../selectors/sign_in_page");
+const {onboarding_page} = require("../selectors/onboarding_page");
+const {navigation_menu} = require("../selectors/navigation_menu");
+
+function generateRandomNumber (length) {
+  let randomNumber = '';
+  let possibleNumbers = '0123456789'
+  for (let i = 0; i < length; i++) {
+    randomNumber += possibleNumbers[Math.floor(Math.random() * possibleNumbers.length)];
+  }
+  return randomNumber;
+}
+
+function randomizeUserData(str){
+  return str + generateRandomNumber(3);
+}
+
+let user = {
+  firstName: 'Auto', 
+  lastName: 'Tester',
+  username: randomizeUserData('autoTester'), 
+  password: randomizeUserData('password'),
+}
+
+let bankInfo = {
+  bankName: 'Best Bank',
+  routingNumber: generateRandomNumber(9),
+  accountNumber: generateRandomNumber(9),
+}
 
 describe('UI tests for sign in page', () => {
 
@@ -101,11 +129,41 @@ describe('UI tests for sign in page', () => {
     cy.get(sign_in_page.title_text)
     .should('be.visible')
     .and('have.text', 'Sign Up')
+    cy.signUp(user);
+    cy.get(sign_in_page.title_text)
+    .should('be.visible')
+    .and('have.text', 'Sign in')
+    cy.login(user)
+    cy.onboarding(bankInfo)
+    cy.logout()
+    cy.get(sign_in_page.title_text)
+    .should('be.visible')
+    .and('have.text', 'Sign in')
   })
 
 
   // 2. should allow a visitor to login
+
+  it('should allow a visitor to login', () => {
+    cy.fixture('user_data').its('test_user').then((user) => {
+      cy.login(user)
+      cy.get(navigation_menu.nav_menu)
+      .should('be.visible')
+      cy.logout()
+    })
+  })
+
   // 3. should allow a visitor to logout
+
+  it('should allow a visitor to logout', () => {
+    cy.fixture('user_data').its('test_user').then((user) => {
+      cy.login(user)
+      cy.logout()
+      cy.get(sign_in_page.title_text)
+      .should('be.visible')
+      .and('have.text', 'Sign in')
+    })
+  })
   // -----------------------------------
 
   // Homework 21.07

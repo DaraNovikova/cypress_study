@@ -1,0 +1,14 @@
+{
+    "test_user": 
+      {
+        "firstName": "Edgar",
+        "lastName": "Johns",
+        "username": "Katharina_Bernier",
+        "password": "s3cret",
+        "email": "Norene39@yahoo.com",
+        "phoneNumber": "625-316-9882",
+        "avatar": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+        "defaultPrivacyLevel": "public",
+        "balance": 168137
+      }
+}
