@@ -10,5 +10,10 @@
         "avatar": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
         "defaultPrivacyLevel": "public",
         "balance": 168137
+      },
+    "test_user2": 
+      {
+        "username": "Tavares_Barrows",
+        "password": "s3cret"
       }
 }

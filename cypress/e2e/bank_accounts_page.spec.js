@@ -45,6 +45,7 @@ describe('UI tests for bank accounts page', () => {
   // create new spec file for bank_accounts tests, automate following tests:
 
   // 1. creates a new bank account
+
   it('creates a new bank account', () => {
     let bank = {
       bankName: randomizeUserData('Best Bank'),
@@ -61,7 +62,8 @@ describe('UI tests for bank accounts page', () => {
   })
 
   // 2. should display bank account form errors
-  it('creates a new bank account', () => {
+
+  it('should display bank account form errors', () => {
     cy.login(user)
     cy.get(navigation_menu.bank_account_btn)
     .click()
@@ -106,7 +108,7 @@ describe('UI tests for bank accounts page', () => {
 
   // 3. user should be able to delete a bank account
   
-  it('creates a new bank account', () => {
+  it('user should be able to delete a bank account', () => {
     let bank = {
       bankName: randomizeUserData('Best Bank'),
       routingNumber: generateRandomNumber(9),
@@ -119,14 +121,4 @@ describe('UI tests for bank accounts page', () => {
     cy.get(bank_accounts_page.bank_accounts_list)
     .contains(`${bank.bankName} (Deleted)`)
   })
-
-  // + create Cypress custom command for user ui_sign_up, ui_login, ui_logout, ui_onboarding
-  
-  // homework 26.7 // use already existing users from database-seed.json file from app project; password - s3cret
-  // 1. navigates to the new transaction form, selects a user and submits a transaction payment
-  // 2. navigates to the new transaction form, selects a user and submits a transaction request"
-  // 3. displays new transaction errors
-  // 4. submits a transaction payment and verifies the deposit for the receiver
-  // 5. submits a transaction request and accepts the request for the receiver
-  // 6. searches for a user by attribute
 })
