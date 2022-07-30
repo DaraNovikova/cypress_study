@@ -6,6 +6,10 @@ export const sign_in_page = {
     username_placeholder:'#username-label',
     password_placeholder:'#password-label',
     username_required_error: '#username-helper-text',
+    password_required_error: '#password-helper-text',
+    confirm_passw_required_error: '#confirmPassword-helper-text',
+    first_name_required_error: '#firstName-helper-text',
+    last_name_required_error: '#lastName-helper-text',
     remember_me_checkbox: '[name="remember"]',
     sign_in_btn: '[type="submit"]',
     sign_up_link: '[data-test="signup"]',
@@ -13,4 +17,5 @@ export const sign_in_page = {
     first_name_field: '#firstName',
     last_name_field: '#lastName',
     confirm_password_field: '#confirmPassword',
+    sign_in_error: '[data-test="signin-error"]'
   }

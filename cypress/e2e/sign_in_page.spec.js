@@ -30,7 +30,7 @@ let bankInfo = {
 
 describe('UI tests for sign in page', () => {
 
-  before('visiting sign in page', () => {
+  beforeEach('visiting sign in page', () => {
     cy.visit('/')
   })
 
@@ -98,6 +98,9 @@ describe('UI tests for sign in page', () => {
   // 6. should show disabled by default sign in btn
 
   it('should show disabled by default sign in btn', () => {
+    cy.get(sign_in_page.username_field)
+    .clear()
+    .blur()
     cy.get(sign_in_page.sign_in_btn)
     .should('be.disabled')
   })
@@ -108,7 +111,6 @@ describe('UI tests for sign in page', () => {
     cy.get(sign_in_page.sign_up_link)
     .click()
     cy.location('pathname').should('eq', '/signup')
-    cy.go('back')
   })
 
   // 8. should show Cypress copyright link that leads to 'https://www.cypress.io/'
@@ -167,10 +169,116 @@ describe('UI tests for sign in page', () => {
   // -----------------------------------
 
   // Homework 21.07
+
   // 4. should display login errors
+
+  it("should display login errors", function () {
+    cy.get(sign_in_page.username_field)
+    .type('user')
+    .clear()
+    .blur()
+    cy.get(sign_in_page.username_required_error)
+    .should('be.visible')
+    .and("contain", "Username is required")
+    cy.get(sign_in_page.password_field)
+    .type('abc')
+    .blur()
+    cy.get(sign_in_page.password_required_error)
+    .should('be.visible')
+    .and("contain", "Password must contain at least 4 characters")
+    
+    cy.get(sign_in_page.sign_in_btn)
+    .should('be.disabled')
+  });
+
   // 5. should display signup errors
+
+  it("should display signup errors", function () {
+    cy.get(sign_in_page.sign_up_link)
+    .click()
+
+    cy.get(sign_in_page.first_name_field)
+    .type('first')
+    .clear()
+    .blur()
+    cy.get(sign_in_page.first_name_required_error)
+    .should('be.visible')
+    .and("contain", "First Name is required")
+
+    cy.get(sign_in_page.last_name_field)
+    .type('last')
+    .clear()
+    .blur()
+    cy.get(sign_in_page.last_name_required_error)
+    .should('be.visible')
+    .and("contain", "Last Name is required")
+
+    cy.get(sign_in_page.username_field)
+    .type('user')
+    .clear()
+    .blur()
+    cy.get(sign_in_page.username_required_error)
+    .should('be.visible')
+    .and("contain", "Username is required")
+
+    cy.get(sign_in_page.password_field)
+    .type('abc')
+    cy.get(sign_in_page.password_required_error)
+    .should('be.visible')
+    .and("contain", "Password must contain at least 4 characters")
+    cy.get(sign_in_page.password_field)
+    .clear()
+    .blur()
+    cy.get(sign_in_page.password_required_error)
+    .should('be.visible')
+    .and("contain", "Enter your password")
+
+    cy.get(sign_in_page.confirm_password_field)
+    .type('abc')
+    cy.get(sign_in_page.confirm_passw_required_error)
+    .should('be.visible')
+    .and("contain", "Password does not match")
+    cy.get(sign_in_page.confirm_password_field)
+    .clear()
+    .blur()
+    cy.get(sign_in_page.confirm_passw_required_error)
+    .should('be.visible')
+    .and("contain", "Confirm your password")
+
+    cy.get(sign_in_page.sign_in_btn)
+    .should('be.disabled')
+  });
+
   // 6. should error for an invalid user
+
+  it("should error for an invalid user", function () {
+    const invalidUser = {
+      username: 'UserName',
+      password: 'invalidPa$$word',
+
+    }
+    cy.login(invalidUser);
+
+    cy.get(sign_in_page.sign_in_error)
+    .should("be.visible")
+    .and("have.text", "Username or password is invalid");
+  });
+
   // 7. should error for an invalid password for existing user
+
+  it('should allow a visitor to logout', () => {
+    cy.fixture('user_data').its('test_user').then((user) => {
+      const notValidUserData = {
+        username: user.username,
+        password: 'invalidPassword'
+      }
+      cy.login(notValidUserData)
+      cy.get(sign_in_page.sign_in_error)
+      .should("be.visible")
+      .and("have.text", "Username or password is invalid");
+    })
+  }) 
+
   //  -------------------------------
   // create new spec file for bank_accounts tests, automate following tests:
   // 1. creates a new bank account
