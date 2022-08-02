@@ -14,6 +14,7 @@ const transaction_description = generateRandomText(5);
   describe('UI tests for transactions page', () => {
 
     beforeEach('visiting sign in page', () => {
+      cy.intercept("GET", "/users*").as("usersList");
       cy.visit('/')
     })
   
@@ -23,14 +24,15 @@ const transaction_description = generateRandomText(5);
 
     it('navigates to the new transaction form, selects a user and submits a transaction payment', () => {
         cy.fixture('user_data').its('test_user').then((user) => {
-        cy.login(user)
+          cy.login(user)
         })
         cy.get(transactions_page.new_transaction_btn)
         .click()
         cy.xpath(transactions_page.verifyTransactionStepTitle('Select Contact'))
         .should('be.visible')
+        cy.wait('@usersList')
         cy.get(transactions_page.users_search_input)
-        .type('Arely Kertzmann')
+        .type('Arely')
         cy.get(transactions_page.first_user)
         .click()
         cy.xpath(transactions_page.verifyTransactionStepTitle('Payment'))
@@ -58,6 +60,7 @@ const transaction_description = generateRandomText(5);
     .click()
     cy.xpath(transactions_page.verifyTransactionStepTitle('Select Contact'))
     .should('be.visible')
+    cy.wait('@usersList')
     cy.get(transactions_page.users_search_input)
     .type('Arely')
     cy.get(transactions_page.first_user)
